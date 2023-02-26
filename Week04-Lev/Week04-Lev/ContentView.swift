@@ -7,16 +7,27 @@
 
 import SwiftUI
 
+
+
 struct ContentView: View {
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        TabView {
+            ColourView()
+                .tabItem {
+                    Label("Colour Sounds", systemImage: "music.note.list")
+                }
+
+            TimerView()
+                .tabItem {
+                    Label("Timer", systemImage: "timer")
+                }
         }
-        .padding()
+
     }
+
+    
+
 }
 
 struct ContentView_Previews: PreviewProvider {
