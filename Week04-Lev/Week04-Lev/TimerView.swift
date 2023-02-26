@@ -18,13 +18,18 @@ struct TimerView: View {
   // Timer gets called every second.
   let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
-  let today = Date()
+  //let today = Date()
 //  let hours   = (Calendar.current.component(.hour, from: today))
 //  let minutes = (Calendar.current.component(.minute, from: today))
 //  let seconds = (Calendar.current.component(.second, from: today))
 
+  //  let mytime = Date()
+    
+    
   var body: some View {
     VStack {
+//        Text (mytime)
+//            .font(.system(size: 30))
         
 //        Text("\(hours):\(minutes):\(seconds)",
         

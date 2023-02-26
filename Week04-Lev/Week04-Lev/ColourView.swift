@@ -9,43 +9,74 @@ import Foundation
 import SwiftUI
 import AVKit
 
-class SoundManager {
+//class SoundManager {
+//
+//    static let instance = SoundManager()
+//
+//    var player: AVAudioPlayer?
+//    enum SoundOption: String {
+//        case Pink
+//        case Red
+//        case Orange
+//        case Yellow
+//        case Green
+//        case Teal
+//        case Blue
+//        case Indigo
+//        case Purple
+//        case Brown
+//        case Gray
+//    }
 
-    static let instance = SoundManager()
 
-    var player: AVAudioPlayer?
-    enum SoundOption: String {
-        case Pink
-        case Red
-        case Orange
-        case Yellow
-        case Green
-        case Teal
-        case Blue
-        case Indigo
-        case Purple
-        case Brown
-        case Gray
-    }
+//func playSound(sound: SoundOption) {
+//
+//    guard let url = Bundle.main.url(forResource: sound.rawValue, withExtension: ".mp3") else { return }
+//            do{
+//        player = try AVAudioPlayer(contentsOf: url)
+//        player?.play()
+//    } catch let error {
+//    print("Error playing sound. \(error.localizedDescription)")
+//    }
+//}
+//}
 
 
-func playSound(sound: SoundOption) {
+let bundleAudio = [
+  "Pink.mp3",
+  "Red.mp3",
+  "Orange.mp3",
+  "Yellow.mp3",
+  "Green.mp3",
+  "Teal.mp3",
+  "Blue.mp3",
+  "Indigo.mp3",
+  "Purple.mp3",
+  "Brown.mp3",
+  "Gray.mp3",];
 
-    guard let url = Bundle.main.url(forResource: sound.rawValue, withExtension: ".mp3") else { return }
-            do{
-        player = try AVAudioPlayer(contentsOf: url)
-        player?.play()
-    } catch let error {
-    print("Error playing sound. \(error.localizedDescription)")
-    }
-}
+func loadBundleAudio(_ fileName:String) -> AVAudioPlayer? {
+  let path = Bundle.main.path(forResource: fileName, ofType:nil)!
+  let url = URL(fileURLWithPath: path)
+  do {
+    return try AVAudioPlayer(contentsOf: url)
+  } catch {
+    print("loadBundleAudio error", error)
+  }
+  return nil
 }
 
 
 struct ColourView: View {
-    let columnLayout = Array(repeating: GridItem(), count: 3)
+    let columnLayout = Array(repeating: GridItem(), count: 2)
 
     @State private var selectedColor = Color.gray
+    @State private var soundIndex = 0
+    @State private var soundFile = bundleAudio[0]
+    @State private var player: AVAudioPlayer? = nil
+    
+    //@State private var selectedAudioColor = []
+    
 
     let allColors: [Color] = [
         .pink,
@@ -62,7 +93,7 @@ struct ColourView: View {
         .gray
     ]
     
-    var soundManager = SoundManager ()
+//    var soundManager = SoundManager ()
 
     var body: some View {
         VStack {
@@ -76,14 +107,27 @@ struct ColourView: View {
             //COLOUR GRID
             ScrollView {
                 LazyVGrid(columns: columnLayout) {
+                    //
                     ForEach(allColors, id: \.description) { color in
                         Button {
-                            SoundManager.instance.playSound(sound: .Pink)
+//                            SoundManager.instance.playSound(sound: .Red)
+                            player = loadBundleAudio(soundFile)
+                            print("player", player as Any)
+                            // Loop indefinitely
+                            player?.numberOfLoops = -1
+                            player?.play()
+                            soundIndex = (soundIndex+1) % bundleAudio.count
+                            soundFile = bundleAudio[soundIndex];
                             selectedColor = color
+                        //UI Format for each colour grid
                         } label: {
                             RoundedRectangle(cornerRadius: 4.0)
                                 .aspectRatio(0.9, contentMode: ContentMode.fit)
                                 .foregroundColor(color)
+                            
+                            //for i in 0..<allColors.count {
+                                
+                            //print("\(allColors[i])")
                         }
                         .buttonStyle(.automatic)
                         
