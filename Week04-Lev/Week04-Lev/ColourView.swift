@@ -99,10 +99,30 @@ struct ColourView: View {
         VStack {
             //TITLE TEXT
             Text("How I Think Colour Sounds Like")
-                .font(.title2)
+                //.font(.title)
+                .font(.system(size: 38))
                 .fontWeight(.semibold)
                 .foregroundColor(selectedColor)
                 .padding(10)
+            
+//            Button("Tap here to Stop Audio") {
+//
+//                player?.stop()
+//
+//            }
+            
+            Button(action: {
+              // Toggle timer on/off.
+                player?.stop()
+            }) {
+              // Start / Stop Button
+                Text("Tap here to Stop audio")
+                .font(.system(size: 20))
+                .frame(width: 250, height: 65)
+                .background(Color.white)
+                .foregroundColor(Color.blue)
+                .cornerRadius(30)
+            }
             
             //COLOUR GRID
             ScrollView {
@@ -118,6 +138,7 @@ struct ColourView: View {
                             player?.play()
                             soundIndex = (soundIndex+1) % bundleAudio.count
                             soundFile = bundleAudio[soundIndex];
+                            //player?.stop()
                             selectedColor = color
                         //UI Format for each colour grid
                         } label: {
