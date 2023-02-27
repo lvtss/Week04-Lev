@@ -144,7 +144,8 @@ struct ColourView: View {
                 LazyVGrid(columns: columnLayout) {
                     //
                     
-                    ForEach(0 ..< allColors.count) { index in
+                    ForEach(0 ..< 12) { index in
+//                        ForEach(0 ..< allColors.count) { index in
 //                        ForEach(allColors, id: \.description) { color in
                         let color = allColors[index]
                         let soundFile = bundleAudio[index]
