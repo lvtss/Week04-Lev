@@ -48,12 +48,26 @@ let bundleAudio = [
   "Orange.mp3",
   "Yellow.mp3",
   "Green.mp3",
+  "Green.mp3",  // .mint missing
   "Teal.mp3",
   "Blue.mp3",
   "Indigo.mp3",
   "Purple.mp3",
   "Brown.mp3",
   "Gray.mp3",];
+
+//    .pink,
+//    .red,
+//    .orange,
+//    .yellow,
+//    .green,
+//    .mint,
+//    .teal,
+//    .blue,
+//    .indigo,
+//    .purple,
+//    .brown,
+//    .gray
 
 func loadBundleAudio(_ fileName:String) -> AVAudioPlayer? {
   let path = Bundle.main.path(forResource: fileName, ofType:nil)!
@@ -71,13 +85,14 @@ struct ColourView: View {
     let columnLayout = Array(repeating: GridItem(), count: 2)
 
     @State private var selectedColor = Color.gray
-    @State private var soundIndex = 0
-    @State private var soundFile = bundleAudio[0]
+//    @State private var soundIndex = 0
+//    @State private var soundFile = bundleAudio[0]
     @State private var player: AVAudioPlayer? = nil
     
     //@State private var selectedAudioColor = []
     
 
+    // Consider createing a struct to color and associated mp3 file
     let allColors: [Color] = [
         .pink,
         .red,
@@ -128,7 +143,11 @@ struct ColourView: View {
             ScrollView {
                 LazyVGrid(columns: columnLayout) {
                     //
-                    ForEach(allColors, id: \.description) { color in
+                    
+                    ForEach(0 ..< allColors.count) { index in
+//                        ForEach(allColors, id: \.description) { color in
+                        let color = allColors[index]
+                        let soundFile = bundleAudio[index]
                         Button {
 //                            SoundManager.instance.playSound(sound: .Red)
                             player = loadBundleAudio(soundFile)
@@ -136,8 +155,8 @@ struct ColourView: View {
                             // Loop indefinitely
                             player?.numberOfLoops = -1
                             player?.play()
-                            soundIndex = (soundIndex+1) % bundleAudio.count
-                            soundFile = bundleAudio[soundIndex];
+//                            soundIndex = (soundIndex+1) % bundleAudio.count
+//                            soundFile = bundleAudio[soundIndex];
                             //player?.stop()
                             selectedColor = color
                         //UI Format for each colour grid
